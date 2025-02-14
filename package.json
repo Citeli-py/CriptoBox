@@ -1,0 +1,27 @@
+{
+  "name": "criptobox",
+  "version": "1.0.0",
+  "description": "Uma aplicação desktop para guardar dados sensíveis com segurança",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ." 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Citeli-py/CriptoBox.git"
+  },
+  "author": "Matheus Citeli",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Citeli-py/CriptoBox/issues"
+  },
+  "homepage": "https://github.com/Citeli-py/CriptoBox#readme",
+  "dependencies": {
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "electron": "^34.2.0"
+  }
+}
