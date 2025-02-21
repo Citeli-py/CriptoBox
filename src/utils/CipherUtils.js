@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+const crypto =  require('crypto');
 
 class CipherUtils {
     static encrypt(data, key) {
@@ -28,4 +28,4 @@ class CipherUtils {
     }
 }
 
-export default CipherUtils;
+module.exports = CipherUtils;

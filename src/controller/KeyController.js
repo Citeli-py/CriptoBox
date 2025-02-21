@@ -1,6 +1,6 @@
-import fs from 'fs';
-import EncryptedFileHandler from '../utils/EncryptedFileHandler.js';
-import CipherUtils from '../utils/CipherUtils.js';
+const fs = require('fs');
+const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
+const CipherUtils = require('../utils/CipherUtils.js');
 
 class KeyController {
     static keysPath = "./data/keys.cript";
@@ -40,4 +40,4 @@ class KeyController {
     }
 }
 
-export default KeyController;
+module.exports = KeyController;

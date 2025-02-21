@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import KeyController from '../controller/KeyController.js';
-import CipherUtils from '../utils/CipherUtils.js';
-import EncryptedFileHandler from '../utils/EncryptedFileHandler.js';
+const fs = require('fs');
+const path = require('path');
+const KeyController = require('../controller/KeyController.js');
+const CipherUtils = require('../utils/CipherUtils.js');
+const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
 
 class FileController {
     static filesPath = "./data/files/";
@@ -50,4 +50,4 @@ class FileController {
     }
 }
 
-export default FileController;
+module.exports = FileController;
