@@ -1,27 +1,25 @@
-import { app, BrowserWindow } from 'electron'
+const { app, BrowserWindow, ipcMain } = require('electron');
+const KeyController = require('./src/controller/KeyController.js');
+const CipherUtils = require('./src/utils/CipherUtils.js');
 
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
-
-  win.loadFile('./src/view/index.html')
-}
+let mainWindow;
 
 app.whenReady().then(() => {
-  createWindow()
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: false, // Melhor prática de segurança
+            contextIsolation: true, // Melhor segurança
+            preload: __dirname + '/preload.js' // Preload para comunicação segura
+        }
+    });
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
+});
 
-})
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-})
+// IPC listener para obter as chaves
+ipcMain.handle('get-keys', async (event, secretKey) => {
+    const key = CipherUtils.generateKey("senha_forte");
+    return KeyController.read(key);
+});
