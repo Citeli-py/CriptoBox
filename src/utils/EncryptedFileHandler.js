@@ -1,5 +1,5 @@
-import fs from 'fs';
-import CipherUtils from './CipherUtils.js';
+const fs = require('fs');
+const CipherUtils = require('./CipherUtils.js');
 
 class EncryptedFileHandler {
     static write(filePath, data, key) {
@@ -19,4 +19,4 @@ class EncryptedFileHandler {
     }
 }
 
-export default EncryptedFileHandler;
+module.exports = EncryptedFileHandler;

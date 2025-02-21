@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Uma aplicação desktop para guardar dados sensíveis com segurança",
   "main": "main.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ." 
