@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Dialog</title>
-  </head>
-  <body>
-    <button id="getKeysButton">Obter Chaves</button>
-    <pre id="keysOutput"></pre>
-    <script src="renderer.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CriptoBox</title>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<style>
+    
+</style>
+<body>
+    <div class="container">
+        <!-- Barra Lateral -->
+        <div class="sidebar">
+            <h2>Arquivos</h2>
+            <ul id="sidebar-ul"></ul>
+        </div>
 
+        <!-- Área do Editor de Texto -->
+        <div class="main-content">
+            <div id="editor">
+                <p>Hello World!</p>
+                <p>Some initial <strong>bold</strong> text</p>
+                <p><br /></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/view/component/componentsLoader.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src='./renderer.js'></script>
-  </body>
+    <!-- Initialize Quill editor -->
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+        });
+    </script>
+</body>
 </html>

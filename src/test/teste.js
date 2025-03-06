@@ -1,7 +1,7 @@
-const FileController = require('./controller/FileController.js');
-const CipherUtils = require('./utils/CipherUtils.js');
-const KeyController = require('./controller/KeyController.js');
-const EncryptedFileHandler = require('./utils/EncryptedFileHandler.js');
+const FileController = require('../controller/FileController.js');
+const CipherUtils = require('../utils/CipherUtils.js');
+const KeyController = require('../controller/KeyController.js');
+const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
 
 // Gerando a chave de criptografia a partir da senha
 const key = CipherUtils.generateKey("senha_forte");
