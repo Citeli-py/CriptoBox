@@ -10,9 +10,7 @@ function createSidebarItem(item) {
   // Adiciona o evento de clique
   a.addEventListener("click", async function (event) {
     event.preventDefault(); // Impede o comportamento padrão do link
-    const secretKey = loadSecretKey();
-    const fileText = await window.electronAPI.getFile(secretKey, item);
-    console.log(fileText);
+    await getFile(item);
   });
 
   // Adiciona o link ao <li>
@@ -58,6 +56,24 @@ function loadSecretKey() {
   }
 
   return uint8Array;
+}
+
+async function saveFile() {
+  const file = document.getElementById("doc-title").value;
+  const text = JSON.stringify(quill.getContents().ops);
+  const secretKey = loadSecretKey();
+  await window.electronAPI.saveFile(secretKey, file, text)
+
+  createSidebarItem(file);
+}
+
+async function getFile(file) {
+  const titulo_input = document.getElementById('doc-title');
+  titulo_input.value = file;
+  titulo_input.setAttribute('readonly', true);
+
+  const text = await window.electronAPI.getFile(loadSecretKey(), file);
+  quill.setContents(JSON.parse(text))
 }
 
 (async () => {

@@ -35,6 +35,7 @@ ipcMain.handle('get-file', async (event, secretKey, file) => {
 
 // IPC listener para salvar um arquivo
 ipcMain.handle('save-file', async (event, secretKey, file, text) => {
+    FileController.create(file, secretKey);
     FileController.write(file, text, secretKey);
     console.log("Salvou")
 });

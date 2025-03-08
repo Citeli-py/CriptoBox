@@ -21,6 +21,15 @@
 
         <!-- Área do Editor de Texto -->
         <div class="main-content">
+            <input
+                type="text"
+                class="document-title-input"
+                id="doc-title"
+                placeholder="Digite o título do documento"
+            />
+
+            <input type="hidden" id="file-token" name="file-token" />
+
             <div id="editor">
                 <p>Hello World!</p>
                 <p>Some initial <strong>bold</strong> text</p>
@@ -33,12 +42,14 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/view/component/componentsLoader.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src='./renderer.js'></script>
+
     <!-- Initialize Quill editor -->
     <script>
         const quill = new Quill('#editor', {
             theme: 'snow',
         });
     </script>
+
+    <script src='./renderer.js'></script>
 </body>
 </html>
