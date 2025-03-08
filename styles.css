@@ -13,6 +13,8 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar {
@@ -55,4 +57,24 @@ body {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
+}
+
+/* Estilos para o input do título */
+.document-title-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+    border-color: transparent;
+}
+
+.document-title-input:focus {
+    border-color: #0078d7;
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.3);
 }
