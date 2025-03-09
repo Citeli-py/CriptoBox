@@ -33,8 +33,8 @@ class KeyController {
      */
     static read(secretKey) {
         // 🔹 Verifica se existe a pasta data
-        if (!fs.existsSync("./data")) {
-            fs.mkdirSync("./data");
+        if (!fs.existsSync("./.criptoBox")) {
+            fs.mkdirSync("./.criptoBox");
         }
 
         // 🔹 Se o arquivo não existir, cria um arquivo vazio criptografado
