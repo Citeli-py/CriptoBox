@@ -37,5 +37,9 @@ ipcMain.handle('get-file', async (event, secretKey, file) => {
 ipcMain.handle('save-file', async (event, secretKey, file, text) => {
     FileController.create(file, secretKey);
     FileController.write(file, text, secretKey);
-    console.log("Salvou")
+});
+
+// IPC listener para deletar um arquivo
+ipcMain.handle('delete-file', async (event, secretKey, file) => {
+    FileController.remove(secretKey, file);
 });
