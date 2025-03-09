@@ -12,11 +12,11 @@ app.whenReady().then(() => {
         webPreferences: {
             nodeIntegration: false, // Melhor prática de segurança
             contextIsolation: true, // Melhor segurança
-            preload: __dirname + '/preload.js' // Preload para comunicação segura
+            preload: __dirname + '/src/view/editor/preload.js' // Preload para comunicação segura
         }
     });
 
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/src/view/editor/index.html');
 });
 
 ipcMain.handle('get-secretKey', async (event, password) => {
@@ -35,8 +35,18 @@ ipcMain.handle('get-file', async (event, secretKey, file) => {
 
 // IPC listener para salvar um arquivo
 ipcMain.handle('save-file', async (event, secretKey, file, text) => {
-    FileController.create(file, secretKey);
+    // Retorna true se o arquivo foi criado
+    // e false se o arquivo já existia
+
+    // Verifica se o arquivo já existe
+    if(KeyController.read(secretKey)[file] === undefined) {
+        FileController.create(file, secretKey);
+        FileController.write(file, text, secretKey);
+        return true;
+    }
+    
     FileController.write(file, text, secretKey);
+    return false;  
 });
 
 // IPC listener para deletar um arquivo
