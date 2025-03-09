@@ -11,3 +11,4 @@ Uma aplicação desktop para guardar dados sensíveis com segurança
 - [X] Criar novo arquivo
 - [ ] Auto-salvamento 
 - [ ] Chave-ciclica
+- [X] Barra lateral retratil
