@@ -5,7 +5,9 @@ function createSidebarItem(item) {
   // Cria o elemento <a>
   const a = document.createElement("a");
   a.textContent = item; // Define o texto do link
-  a.href = "#"; // Define um href válido (pode ser "#" ou outro valor)
+  a.className = "sidebar-item"; // Define a classe do link
+  a.id = item; // Define o ID do link
+  //a.href = "#"; // Define um href válido (pode ser "#" ou outro valor)
 
   // Adiciona o evento de clique
   a.addEventListener("click", async function (event) {
@@ -60,7 +62,13 @@ function loadSecretKey() {
 
 async function saveFile() {
   const file = document.getElementById("doc-title").value;
+  if(!file) {
+    alert("Informe um título para o arquivo.");
+    return;
+  }
+
   const text = JSON.stringify(quill.getContents().ops);
+
   const secretKey = loadSecretKey();
   await window.electronAPI.saveFile(secretKey, file, text)
 
@@ -70,10 +78,78 @@ async function saveFile() {
 async function getFile(file) {
   const titulo_input = document.getElementById('doc-title');
   titulo_input.value = file;
-  titulo_input.setAttribute('readonly', true);
+  //titulo_input.setAttribute('readonly', true);
 
-  const text = await window.electronAPI.getFile(loadSecretKey(), file);
-  quill.setContents(JSON.parse(text))
+  const fileInfo = await window.electronAPI.getFile(loadSecretKey(), file);
+
+  if (fileInfo.text)
+    quill.setContents(JSON.parse(fileInfo.text));
+  
+}
+
+async function renameFile(file, novoTitulo) {
+  const secretKey = loadSecretKey();
+  await window.electronAPI.renameFile(secretKey, file, novoTitulo);
+}
+
+
+async function deleteFile() {
+
+  const titulo_input = document.getElementById('doc-title');
+  const file = titulo_input.value;
+
+  if(!file) 
+    return;
+
+  if(!confirm(`Tem certeza que deseja deletar o arquivo ${file}?`)) 
+    return;
+  
+
+  const secretKey = loadSecretKey();
+  await window.electronAPI.deleteFile(secretKey, file);
+
+  createNewFile();
+  const sidebarItem = document.getElementById(file);
+  sidebarItem.remove();
+}
+
+/**
+ * Abre um novo arquivo para editar
+ */
+function createNewFile() {
+  const titulo_input = document.getElementById('doc-title');
+  titulo_input.value = '';
+
+  quill.setContents([{ insert: '\n' }]);
+}
+
+
+// let tituloAnterior = ''; // Armazena o título anterior
+// const docTitleInput = document.getElementById('doc-title');
+// // Event listener para o input do título (evento blur)
+// docTitleInput.addEventListener('blur', async () => {
+//   const novoTitulo = docTitleInput.value;
+
+//   // Verifica se o título foi alterado
+//   if (novoTitulo && novoTitulo !== tituloAnterior) {
+//     console.log(`Título alterado de "${tituloAnterior}" para "${novoTitulo}"`);
+//     await renameFile(tituloAnterior, novoTitulo)
+//     tituloAnterior = novoTitulo; // Atualiza o título anterior
+//   }
+// });
+
+// // Atualiza o título anterior quando o input ganha foco
+// docTitleInput.addEventListener('focus', () => {
+//   tituloAnterior = docTitleInput.value;
+// });
+
+async function putItemsOnSidebar() {
+  const secretKey = loadSecretKey();
+  const keys = await window.electronAPI.getKeys(secretKey);
+  
+  for(const arquivo in keys){
+    createSidebarItem(arquivo);
+  }
 }
 
 (async () => {
@@ -81,10 +157,6 @@ async function getFile(file) {
   const secretKey = await window.electronAPI.getSecretKey(password);
   storeSecretKey(secretKey)
 
-  const keys = await window.electronAPI.getKeys(secretKey);
-  
-  for(const arquivo in keys){
-    createSidebarItem(arquivo);
-  }
+  await putItemsOnSidebar();
 })();
 
