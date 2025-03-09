@@ -7,7 +7,7 @@ const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
 const File = require('../model/File.js');
 
 class FileController {
-    static filesPath = "./data/files/";
+    static filesPath = "./.criptoBox/files/";
 
     static create(name, secretKey) {
         const nameToken = CipherUtils.gerarTokenAleatorio();

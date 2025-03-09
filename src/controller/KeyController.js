@@ -3,7 +3,7 @@ const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
 const CipherUtils = require('../utils/CipherUtils.js');
 
 class KeyController {
-    static keysPath = "./data/keys.cript";
+    static keysPath = "./.criptoBox/keys.cript";
 
     /**
      * Adiciona uma chave AES para um arquivo
