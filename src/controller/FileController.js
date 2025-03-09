@@ -4,6 +4,8 @@ const KeyController = require('../controller/KeyController.js');
 const CipherUtils = require('../utils/CipherUtils.js');
 const EncryptedFileHandler = require('../utils/EncryptedFileHandler.js');
 
+const File = require('../model/File.js');
+
 class FileController {
     static filesPath = "./data/files/";
 
@@ -35,6 +37,12 @@ class FileController {
         );
     }
 
+    /**
+     * Lê um arquivo criptografado
+     * @param {string} name 
+     * @param {Uint8Array} secretKey 
+     * @returns {File} 
+     */
     static read(name, secretKey) {
         const fileInfo = KeyController.read(secretKey)[name];
         if(!fileInfo) {
@@ -42,11 +50,34 @@ class FileController {
         }
 
         const aesKey = Buffer.from(fileInfo['aes_key'], 'hex');
-        
-        return EncryptedFileHandler.read(
-            path.join(FileController.filesPath, fileInfo['token']),
-            aesKey
-        ).toString();
+
+        try {
+            const text = EncryptedFileHandler.read(
+                path.join(FileController.filesPath, fileInfo['token']),
+                aesKey
+            ).toString();
+
+            return new File(name, text, fileInfo['token']);
+
+        } catch (error) {
+            KeyController.remove(secretKey, name);
+            throw new Error("Não foi possivel ler o arquivo.");
+        }
+    }
+
+    /**
+     * Remove um arquivo
+     * @param {Uint8Array} secretKey
+     * @param {string} name
+     */
+    static remove(secretKey, name) {
+        const fileInfo = KeyController.read(secretKey)[name];
+        if(!fileInfo) {
+            throw new Error(`O arquivo ${name} não existe.`);
+        }
+
+        fs.unlinkSync(path.join(FileController.filesPath, fileInfo['token']));
+        KeyController.remove(secretKey, name);
     }
 }
 

@@ -5,6 +5,13 @@ const CipherUtils = require('../utils/CipherUtils.js');
 class KeyController {
     static keysPath = "./data/keys.cript";
 
+    /**
+     * Adiciona uma chave AES para um arquivo
+     * @param {Uint8Array} secretKey - Chave secreta AES
+     * @param {string} nameToken - Token do arquivo
+     * @param {string} name - Nome do arquivo 
+     * @returns {Buffer} - Chave AES gerada
+     */
     static add(secretKey, nameToken, name) {
         const aesKey = CipherUtils.generateKey(CipherUtils.gerarTokenAleatorio());
         const data = {
@@ -19,6 +26,11 @@ class KeyController {
         return aesKey;
     }
 
+    /**
+     * Lê o arquivo de chaves
+     * @param {Uint8Array} secretKey - Chave secreta AES
+     * @returns {Object} - Objeto JSON com as chaves
+     */
     static read(secretKey) {
         // 🔹 Verifica se existe a pasta data
         if (!fs.existsSync("./data")) {
@@ -37,6 +49,18 @@ class KeyController {
             console.error("Erro ao ler o arquivo de chaves:", error.message);
             return {};
         }
+    }
+
+    /**
+     * Remove um arquivo do arquivo de chaves
+     * @param {Uint8Array} secretKey - Chave secreta AES
+     * @param {string} name - Nome do arquivo
+     * @returns {Object} - Objeto com as informações do arquivo
+     */
+    static remove(secretKey, name) {
+        const keysJson = KeyController.read(secretKey);
+        delete keysJson[name];
+        EncryptedFileHandler.write(KeyController.keysPath, Buffer.from(JSON.stringify(keysJson)), secretKey);
     }
 }
 
