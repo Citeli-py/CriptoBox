@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CriptoBox</title>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<style>
+    
+</style>
+<body>
+    <div class="container">
+        <!-- Barra Lateral -->
+        <div class="sidebar">
+            <!-- Botão para colapsar o sidebar -->
+            <button id="toggle-sidebar" class="collapse-button"></button>
+            <button class="new-file-button" onclick="createNewFile()">Novo</button>
+            <h2>Arquivos</h2>
+            <ul id="sidebar-ul"></ul>
+        </div>
+
+        <!-- Área do Editor de Texto -->
+        <div class="main-content">
+            <!-- Contêiner para o título e os botões -->
+            <div class="title-container">
+                <input
+                    type="text"
+                    class="document-title-input"
+                    id="doc-title"
+                    placeholder="Digite o título do documento"
+                />
+          
+                <!-- Botões -->
+                <div class="buttons-container">
+                    <button onclick="saveFile()">Salvar</button>
+                    <button onclick="deleteFile()">Excluir</button>
+                </div>
+            </div>
+          
+            <!-- Hidden input para o nome anterior do arquivo -->
+            <input type="hidden" id="old-title" name="old-title" />
+        
+            <!-- Editor de texto -->
+            <div id="editor"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <!-- Initialize Quill editor -->
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+        });
+
+        // Seleciona o botão e o sidebar
+        const toggleSidebarButton = document.getElementById('toggle-sidebar');
+        const sidebar = document.querySelector('.sidebar');
+
+        // Adiciona um evento de clique ao botão
+        toggleSidebarButton.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed'); // Alterna a classe 'collapsed'
+        });
+    </script>
+
+    <script src='./renderer.js'></script>
+</body>
+</html>
