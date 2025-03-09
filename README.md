@@ -7,7 +7,7 @@ Uma aplicação desktop para guardar dados sensíveis com segurança
 - [ ] gerenciamento de usuários
 - [ ] Refatorar renderer e main
 - [ ] Fontes melhores pro quill
-- [ ] Salvar Arquivo
-- [ ] Criar novo arquivo
+- [X] Salvar Arquivo
+- [X] Criar novo arquivo
 - [ ] Auto-salvamento 
 - [ ] Chave-ciclica
